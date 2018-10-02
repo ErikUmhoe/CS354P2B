@@ -34,7 +34,7 @@ typedef struct _Square {
     int **array;
 } Square;
 
-/* TODO:
+/* 
  * Retrieves from the first line of the input file,
  * the size of the square matrix.
  * 
@@ -55,7 +55,7 @@ void get_dimensions(FILE *fp, int *size) {
 
 }
 
-/* PARTIALLY COMPLETED:
+/* 
  * Traverses a given layer from the square matrix
  * 
  * array: Heap allocated 2D square matrix
@@ -77,38 +77,36 @@ void traverse_layer(int **array, int size, int layer, FILE *op) {
 	row_num = layer;
 	for(int x = layer; x < size-layer; x++) {
 		fprintf(op,"%i ", *(*(array + row_num) + x));
-		printf("%i ", *(*(array + row_num) + x));
-
+		
 	}
-	printf("\n");
 
 
 	//Traverse right column from top to bottom with appropriate bounds
 	col_num = size-layer-1;
 	for(int x = layer+1; x < size-layer; x++) {
 		fprintf(op,"%i ", *(*(array+x)+col_num));
-		printf("%i ", *(*(array+x)+col_num));
+
 	
 	}
-	printf("\n");
+
 
 	//Traverse lower row from right to left with appropriate bounds
 	row_num = size-layer-1;
 	for(int x = size-layer-2; x >= layer; x--) {
 		fprintf(op,"%i ", *(*(array+row_num)+x));
-		printf("%i ", *(*(array+row_num)+x));
+		
 		
 	}
-	printf("\n");
+
 	//Traverse left column from bottom to top with appropriate bounds
 	col_num = layer;
 	for(int x = size-layer-2; x > layer; x--) {
 		fprintf(op,"%i ", *(*(array+x)+col_num));
-		printf("%i ", *(*(array+x)+col_num));
+
 
 
 	}
-	printf("\n");
+
 
 }
 
@@ -218,7 +216,12 @@ int main(int argc, char *argv[]) {
 	//Call the function traverse_spirally
 	traverse_spirally(square, ofp);
 	//Free the dynamically allocated memory
-
+	for(int i = 0; i < size; i++)
+    	free((square->array + i));
+    free(square->array);
+    square->array=NULL;
+    free(square);
+    square = NULL;
 	//Close the input file
 
 	//Close the output file
